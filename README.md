@@ -34,3 +34,20 @@ var obj = new MyClass();
 console.log(obj.getMyVal()); // => "My Value"
 
 ```
+
+__Extending a class__
+
+```javascript
+
+var MyChildClass = Object.class({
+    extends: MyClass,
+    _construct: function() {
+        MyChildClass._super();
+    }
+});
+
+var obj = new MyChildClass();
+
+console.log(obj.getMyVal()) // => "My Value"
+
+```
