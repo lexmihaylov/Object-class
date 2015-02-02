@@ -91,3 +91,85 @@ Class._super(this) // will call the parent class' constructor without any argume
 Class._super(this, [arg1, arg2]) // will call parent class' constructor with arg1 and arg2
 var result = Class._super(this, 'parentMethod', [arg1, arg2]); // will call parent method with arg1 and arg2 as input arguments
 ```
+
+## Example usage with Paper.js
+
+__index.html__
+
+```html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="bower_components/paper/dist/paper-full.min.js"></script>
+    <script src="bower_components/object-class/object-class.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>
+
+```
+
+__main.js__
+
+```javascript
+
+(function(page, dom) {
+
+  var CustomCircle = Object.class({
+    extends: paper.Path,
+    _construct: function(point, radius) {
+      CustomCircle._super(this);
+      this.center = {
+        x: point.x,
+        y: point.y
+      }
+
+      this.radius = radius;
+      this.selected = true;
+      this.closed = true;
+
+      this.drawSegments();
+
+      this.smooth();
+    },
+    // class methods
+    prototype: {
+      drawSegments: function() {
+        for(var ang = 315; ang >= 0; ang -= 45) {
+          this.add(
+            {
+              x: this.center.x + this.radius*Math.cos(this.degToRad(ang)),
+              y: this.center.y + this.radius*Math.sin(this.degToRad(ang))
+            }
+          );
+        }
+      },
+
+      /**
+       * converts degrees to radians
+       */
+      degToRad: function(deg) {
+        return deg * (Math.PI / 180);
+      }
+    }
+  });
+
+  page.onload = function() {
+    var canvas = dom.getElementById('canvas');
+
+    canvas.width = 600;
+    canvas.height = 600;
+
+    paper.setup(canvas);
+
+    var circle = new CustomCircle({x: 300, y: 300}, 150);
+
+    paper.view.draw();
+  };
+
+})(window, document);
+
+```
