@@ -52,6 +52,8 @@ console.log(obj.getMyVal()) // => "My Value"
 
 ```
 
+__Note: all static methods and properties set to the parent class will not be extended__
+
 __Overriding methods__
 
 ```javascript
@@ -111,7 +113,7 @@ var MyClass = Object.class({
 
 MyClass.staticProperty = 'this property is static';
 MyClass.staticMethod = function() {
-  return 'static method called
+  return 'static method called';
 };
 
 ```
