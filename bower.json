@@ -1,0 +1,13 @@
+{
+  "name": "object-class",
+  "authors": [
+    "Alexander Mihaylov <lex.mihaylov@gmail.com>"
+  ],
+  "description": "JavaScript plugin for creating class structures.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "object-class.js",
+  "ignore": [
+    ".c9"
+  ]
+}
