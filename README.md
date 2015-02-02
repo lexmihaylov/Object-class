@@ -92,6 +92,36 @@ Class._super(this, [arg1, arg2]) // will call parent class' constructor with arg
 var result = Class._super(this, 'parentMethod', [arg1, arg2]); // will call parent method with arg1 and arg2 as input arguments
 ```
 
+__Accessing Static methods from inside the class__
+
+istead of typing `MyClass.staticMethod` you can use the `__self()` method from inside the class
+
+__example:__
+
+```javascript
+
+var MyClass = Object.class({
+    _construct: function() {
+        this.myVal = "My value"
+        
+        console.log(this._self().staticProperty);
+        console.log(this._self().staticMethod());
+    }
+});
+
+MyClass.staticProperty = 'this property is static';
+MyClass.staticMethod = function() {
+  return 'static method called
+};
+
+```
+
+You can also use the `_self()` method to call `_super` like so:
+
+```javascript
+this._self()._super(this); // <=> MyClass._super(this);
+```
+
 ## Example usage with Paper.js
 
 __index.html__
