@@ -76,3 +76,18 @@ var obj = new MyChildClass();
 console.log(obj.getMyVal()) // => "My Value [called from child class] "
 
 ```
+
+__Super method__
+
+the super method accepts three parameters
+ * `context` - is the context in which the method will be executed
+ * `method` (optional) - method name to execute. If a method is not supplied then the class constructor will be executed
+ * `params` (optional) - array of parameters to pass to the super method
+
+__examples:__
+
+```javascript
+Class._super(this) // will call the parent class' constructor without any arguments
+Class._super(this, [arg1, arg2]) // will call parent class' constructor with arg1 and arg2
+var result = Class._super(this, 'parentMethod', [arg1, arg2]); // will call parent method with arg1 and arg2 as input arguments
+```
