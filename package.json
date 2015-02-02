@@ -1,0 +1,19 @@
+{
+    "name": "object-class",
+    "preferGlobal": false,
+    "version": "0.1.0",
+    "keywords": [
+        "object oriented javascript",
+        "object",
+        "class"
+    ],
+    "description": "JavaScript plugin for creating class structures",
+    "author": "Alexander Mihaylov <lex.mihaylov@gmail.com>",
+    "license": "MIT",
+    "engine": "node >= 0.10.22",
+    
+    "repository": { 
+        "type" : "git",
+        "url" : "https://github.com/lexmihaylov/Object.class.git"
+    }
+}
