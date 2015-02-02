@@ -42,12 +42,37 @@ __Extending a class__
 var MyChildClass = Object.class({
     extends: MyClass,
     _construct: function() {
-        MyChildClass._super();
+        MyChildClass._super(this);
     }
 });
 
 var obj = new MyChildClass();
 
 console.log(obj.getMyVal()) // => "My Value"
+
+```
+
+__Overriding methods__
+
+```javascript
+
+var MyChildClass = Object.class({
+    extends: MyClass,
+    _construct: function() {
+        MyChildClass._super(this);
+    }
+});
+
+MyChildClass.prototype.getMyVal = function() {
+
+    var val = MyChildClass._super(this, 'getMyVal');
+    
+    return val + ' [called from child class] ';
+
+};
+
+var obj = new MyChildClass();
+
+console.log(obj.getMyVal()) // => "My Value [called from child class] "
 
 ```
