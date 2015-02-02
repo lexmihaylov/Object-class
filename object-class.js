@@ -2,12 +2,12 @@
     if(typeof(define) === 'function' && define.amd) {
         define(function() {
             // expose plugin globally
-            return (root.Object.class = factory);
+            return (root.Object.class = factory());
         });
     } else if (typeof exports !== 'undefined') {
         exports = factory();
     } else if(typeof(root) === 'object' && typeof(root.document) === 'object') {
-        root.Object.class = factory;
+        root.Object.class = factory();
     }
 })(window, function() {
 
@@ -35,7 +35,53 @@
             // extend a class if it's set in the definition
             if (definition.extends) {
                 Class._inherits(classDefinition, definition.extends);
-    
+                
+                // variable to use in the closure
+                var superClass = definition.extends;
+                
+                /**
+                 * Provides easy access to the parent class' prototype
+                 * 
+                 * @static
+                 * @return {mixed} result of the execution if there is any
+                 */
+                classDefinition._super = function(context, method, argv) {
+                    var result;
+                    
+                    if(!context) {
+                        throw new Error('Undefined context.');
+                    }
+                    
+                    var _this = context;
+                    
+                    if(!argv) {
+                        argv = [];
+                    }
+                    
+                    if(method) {
+                        if(method instanceof Array) {
+                            argv = method;
+                            method = undefined;
+                        } else if(typeof(method) !== 'string') {
+                            throw new Error('Expected string for method value, but ' + typeof(method) + ' given.');
+                        }
+                    }
+                    
+                    if (method) {
+                        // execute a method from the parent prototype
+                        if(superClass.prototype[method] &&
+                                typeof(superClass.prototype[method]) === 'function') {
+                            result = superClass.prototype[method].apply(_this, argv);
+                        } else {
+                            throw new Error("Parent class does not have a method named '" + method + "'.");
+                        }
+                    } else {
+                        // if no method is set, then we execute the parent constructor
+                        result = superClass.apply(_this, argv);
+                    }
+        
+                    return result;
+                };
             }
     
             // implement a object of method and properties
@@ -72,55 +118,6 @@
         classDefinition.prototype._self = function() {
             return classDefinition;
         };
-    
-        if(definition.extends) {
-            // variable to use in the closure
-            var superClass = definition.extends;
-            
-            /**
-             * Provides easy access to the parent class' prototype
-             * 
-             * @static
-             * @return {mixed} result of the execution if there is any
-             */
-            classDefinition._super = function(context, method, argv) {
-                var result;
-                
-                if(!context) {
-                    throw new Error('Undefined context.');
-                }
-                
-                var _this = context;
-                
-                if(!argv) {
-                    argv = [];
-                }
-                
-                if(method) {
-                    if(method instanceof Array) {
-                        argv = method;
-                        method = undefined;
-                    } else if(typeof(method) !== 'string') {
-                        throw new Error('Expected string for method value, but ' + typeof(method) + ' given.');
-                    }
-                }
-                
-                if (method) {
-                    // execute a method from the parent prototype
-                    if(superClass.prototype[method] &&
-                            typeof(superClass.prototype[method]) === 'function') {
-                        result = superClass.prototype[method].apply(_this, argv);
-                    } else {
-                        throw new Error("Parent class does not have a method named '" + method + "'.");
-                    }
-                } else {
-                    // if no method is set, then we execute the parent constructor
-                    result = superClass.apply(_this, argv);
-                }
-    
-                return result;
-            };
-        }
     
         // return the new class
         return classDefinition;
