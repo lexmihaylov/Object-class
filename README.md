@@ -7,11 +7,11 @@ With this plugin it is easear to create classes, inherit classes, implement obje
 
 __Using bower__
 
-    bower install lexmihaylov/Object.class
+    bower install lexmihaylov/Object-class
 
 __Using npm__
 
-    npm install lexmihaylov/Object.class
+    npm install lexmihaylov/Object-class
     
 ## Usage
 
