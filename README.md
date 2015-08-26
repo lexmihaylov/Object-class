@@ -1,7 +1,7 @@
 # Object.class();
 
 Is a plugin for creating class structures. Object.class is a port of the class definition in burjs. 
-With this plugin it is easear to create classes, inherit classes, implement objects of methods, and call super methods.
+With this plugin it is easier to create classes, inherit classes, implement objects of methods, and call super methods.
 
 ## Installation
 
